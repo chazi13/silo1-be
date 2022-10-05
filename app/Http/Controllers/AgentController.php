@@ -43,9 +43,38 @@ class AgentController extends Controller
      */
     public function create(Request $request)
     {
-        $agent = Agent::create($request->all());
+        $res = $this->microgen->service('agents')->create($request->all());
+
+        if (array_key_exists('error', $res)) {
+            return response()->json($res['error'], $res['status']);
+        };
+
+        $agent = Agent::create(array(
+            'id' => $res['_id'],
+            'name' => $res['name'],
+        ));
 
         return response()-> json($agent);
+    }
+
+    /**
+     * Update an customer
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, string $id) {
+        $res = $this->microgen->service('agents')->updateById($id, $request->all());
+
+        if (array_key_exists('error', $res)) {
+            return response()->json($res['error'], $res['status']);
+        };
+
+        $affectedRow = Agent::where('id', '=', $id)->update($request->all());
+        $updatedAgent = Agent::find($id);
+
+        return response()->json($updatedAgent);
     }
 
     /**

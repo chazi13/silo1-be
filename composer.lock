@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c61ff82cbf0142a401a48a8161e1595a",
+    "content-hash": "380cf62009c9ca520cd09822f2414a06",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1668,6 +1668,51 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
+        },
+        {
+            "name": "microgen-v3/sdk",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mejik-dev/microgen-v3-php.git",
+                "reference": "066597c2dfbe7055e6cfcb9bf45262973e9c5a08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mejik-dev/microgen-v3-php/zipball/066597c2dfbe7055e6cfcb9bf45262973e9c5a08",
+                "reference": "066597c2dfbe7055e6cfcb9bf45262973e9c5a08",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Microgen\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mejik",
+                    "homepage": "https://microgen.id"
+                }
+            ],
+            "description": "Microgen SDK for PHP",
+            "homepage": "https://microgen.id",
+            "support": {
+                "issues": "https://github.com/mejik-dev/microgen-v3-php/issues",
+                "source": "https://github.com/mejik-dev/microgen-v3-php/tree/main"
+            },
+            "time": "2022-09-07T02:23:47+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -7699,7 +7744,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "microgen-v3/sdk": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

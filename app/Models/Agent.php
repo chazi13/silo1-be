@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agent extends Model
 {
-    use Uuids, HasFactory;
+    use HasFactory;
 
-
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +18,7 @@ class Agent extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name'
     ];
 

@@ -14,7 +14,7 @@ class CreateAgentsTable extends Migration
     public function up()
     {
         Schema::create('agents', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->string('id')->primary();
             $table->string('name')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
