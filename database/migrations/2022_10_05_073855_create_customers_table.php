@@ -19,9 +19,7 @@ class CreateCustomersTable extends Migration
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
-            $table->integer('zip')->nullable();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrentOnUpdate();
+            $table->string('zip')->nullable();
 
             $table->foreign('agent_id')->references('id')->on('agents');
         });

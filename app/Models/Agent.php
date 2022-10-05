@@ -11,6 +11,8 @@ class Agent extends Model
     use HasFactory;
 
     public $incrementing = false;
+    public $timestamps = false;
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +26,6 @@ class Agent extends Model
 
     public function customers()
     {
-        return $this->hasMany(Customer::class, 'agent_id', 'id');
+        return $this->belongsToMany(Customer::class, 'agents_costumers', 'agent_id', 'customer_id');
     }
 }

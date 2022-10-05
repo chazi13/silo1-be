@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\AgentsCostumers;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -38,15 +39,42 @@ class CustomerController extends Controller
      */
     public function create(Request $request) {
 
-        $res = $this->microgen->service('customers')->create($request->all());
-
-        if (array_key_exists('error', $res)) {
+        $input = array(
+            "address" => $request->address,
+            "agent" => array($request->agent_id),
+            "city" => $request->city,
+            "zip" => $request->zip,
+            "name"=> $request->name,
+        );        
+        
+        $res = $this->microgen->service('customers')->create($input);
+        
+        if (array_key_exists('error', $res)) { 
             return response()->json($res['error'], $res['status']);
         };
 
-        $customer = Customer::create($request->all());
+        $response = $res['data'];
+        $input = array(
+            "address" => $request->address,
+            "agent_id" => $request->agent_id,
+            "city" => $request->city,
+            "zip" => $request->zip,
+            "id" => $response["_id"],            
+            "name"=> $request->name,
+        );
 
-        return response()->json($customer);
+
+        Customer::where('id', '=', $response["_id"])->delete();
+
+        $customer = Customer::create($input);
+
+        $agentCustomer = AgentsCostumers::create(array(
+            "customer_id" => $response["_id"],
+            "agent_id" => $request->agent_id
+        ));
+
+
+        return response()->json($input);
     }
 
     /**
@@ -57,11 +85,24 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $id) {
-        $res = $this->microgen->service('customers')->updateById($id, $request->all());
+        $input = array(
+            "address" => $request->address,
+            "agent" => array($request->agent_id),
+            "city" => $request->city,
+            "zip" => $request->zip,
+            "name"=> $request->name,
+        );
+
+
+        $res = $this->microgen->service('customers')->updateById($id, $input);
 
         if (array_key_exists('error', $res)) {
             return response()->json($res['error'], $res['status']);
         };
+
+        AgentsCostumers::where('customer_id', '=', $id)->update(array(
+            "agent_id" => $request->agent_id
+        ));
 
         $affectedRow = Customer::where('id', '=', $id)->update($request->all());
         $updatedCustomer = Customer::find($id);

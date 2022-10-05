@@ -18,7 +18,7 @@ class AgentController extends Controller
     {
         $agent = Agent::with("customers")->get();
 
-        return response()-> json($agent);
+        return response()->json($agent);
     }
 
     /**
@@ -43,18 +43,24 @@ class AgentController extends Controller
      */
     public function create(Request $request)
     {
-        $res = $this->microgen->service('agents')->create($request->all());
-
+        $res = $this->microgen->service('agents')->create($request->all()); 
+        
         if (array_key_exists('error', $res)) {
+
             return response()->json($res['error'], $res['status']);
         };
 
+        $res = $res['data'];
+
+        Agent::where('id', '=', $res["_id"])->delete();
+ 
         $agent = Agent::create(array(
             'id' => $res['_id'],
             'name' => $res['name'],
         ));
 
-        return response()-> json($agent);
+        
+        return response()->json($agent);
     }
 
     /**
