@@ -14,4 +14,4 @@ RUN composer install
 
 WORKDIR /var/www/html
 
-CMD php artisan optimize:clear && php artisan serve
+CMD php artisan optimize && php artisan serve

@@ -16,9 +16,9 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agent = Agent::with("customers")->get();
+        $agents = Agent::all();
 
-        return response()-> json($agent);
+        return $agents;
     }
 
     /**
@@ -31,7 +31,7 @@ class AgentController extends Controller
     {
         $agent = Agent::where('id', '=', $id)->first();
 
-        return response()-> json($agent);
+        return $agent;
 
     }
 
@@ -54,7 +54,7 @@ class AgentController extends Controller
             'name' => $res['name'],
         ));
 
-        return response()-> json($agent);
+        return $agent;
     }
 
     /**
@@ -74,7 +74,7 @@ class AgentController extends Controller
         $affectedRow = Agent::where('id', '=', $id)->update($request->all());
         $updatedAgent = Agent::find($id);
 
-        return response()->json($updatedAgent);
+        return $updatedAgent;
     }
 
     /**
@@ -88,11 +88,11 @@ class AgentController extends Controller
         $res = $this->microgen->service('agents')->deleteById($id);
 
         if (array_key_exists('error', $res)) {
-            return response()->json($res['error'], $res['status']);
+            return response($res['error'], $res['status']);
         };
 
         Agent::where('id', '=', $id)->delete();
 
-        return response()-> json(array("message" => "Resource deleted successfully"));
+        return array("message" => "Resource deleted successfully");
     }
 }

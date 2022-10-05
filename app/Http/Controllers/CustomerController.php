@@ -15,7 +15,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::with("agent")->get();
-        return response()-> json($customers);
+        return $customers;
     }
 
     /**
@@ -27,7 +27,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = Customer::where('id', '=', $id)->first();
-        return response()-> json($customer);
+        return $customer;
     }
 
     /**
@@ -46,7 +46,7 @@ class CustomerController extends Controller
 
         $customer = Customer::create($request->all());
 
-        return response()->json($customer);
+        return $customer;
     }
 
     /**
@@ -66,7 +66,7 @@ class CustomerController extends Controller
         $affectedRow = Customer::where('id', '=', $id)->update($request->all());
         $updatedCustomer = Customer::find($id);
 
-        return response()->json($updatedCustomer);
+        return $updatedCustomer;
     }
 
     /**
@@ -85,6 +85,6 @@ class CustomerController extends Controller
 
         Customer::where('id', '=', $id)->delete();
 
-        return response()-> json(array("message" => "Resource deleted successfully"));
+        return array("message" => "Resource deleted successfully");
     }
 }

@@ -24,7 +24,7 @@ class UserController extends Controller
             'phoneNumber' => $res['user']['phoneNumber'],
         ));
 
-        return response()->json($user);
+        return $user;
     }
 
     public function login(Request $request) {
@@ -37,6 +37,6 @@ class UserController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        return response()->json($user);
+        return $user;
     }
 }
