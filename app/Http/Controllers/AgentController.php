@@ -85,6 +85,12 @@ class AgentController extends Controller
      */
     public function delete($id)
     {
+        $res = $this->microgen->service('agents')->deleteById($id);
+
+        if (array_key_exists('error', $res)) {
+            return response()->json($res['error'], $res['status']);
+        };
+
         Agent::where('id', '=', $id)->delete();
 
         return response()-> json(array("message" => "Resource deleted successfully"));
