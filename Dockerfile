@@ -10,7 +10,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . .
 
-RUN composer install
+RUN composer update -q
+
+RUN composer install -q
 
 WORKDIR /var/www/html
 
